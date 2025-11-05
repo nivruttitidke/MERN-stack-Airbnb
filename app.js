@@ -63,7 +63,7 @@ const sessionOption = {
     cookie: {
         httpOnly: true,
        secure: true,          
-       sameSite: "lax",
+       sameSite: "none",
         expires: Date.now() + 7 *24 *60 *60 *100,
         maxAge: 7 * 24 * 60 * 60 *100,
        
