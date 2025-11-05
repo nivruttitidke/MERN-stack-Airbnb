@@ -53,15 +53,20 @@ store.on("error",(err)=>{
     console.log("ERROR IN MONGO SESSION STORE",err);
 });
 
+app.set("trust proxy", 1);
+
 const sessionOption = {
     store,
     secret:process.env.SECRET,
     resave:false,
-    saveUninitialized:true,
+    saveUninitialized:false,
     cookie: {
+        httpOnly: true,
+       secure: true,          
+       sameSite: "none",
         expires: Date.now() + 7 *24 *60 *60 *100,
         maxAge: 7 * 24 * 60 * 60 *100,
-        httpOnly: true,
+       
     },
 };
 
