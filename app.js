@@ -63,7 +63,7 @@ const sessionOption = {
     cookie: {
         httpOnly: true,
        secure: true,          
-       sameSite: "none",
+       sameSite: "lax",
         expires: Date.now() + 7 *24 *60 *60 *100,
         maxAge: 7 * 24 * 60 * 60 *100,
        
@@ -72,6 +72,12 @@ const sessionOption = {
 
 app.use(session(sessionOption));
 app.use(flash());
+
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Credentials", "true");
+    next();
+});
+
 
 app.use(passport.initialize());
 app.use(passport.session());
