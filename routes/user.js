@@ -12,13 +12,7 @@ router.post("/signup",wrapAsync(usercontroller.postSignup));
 
 router.get("/login",usercontroller.login);
 
-// router.post(
-//   "/login",
-//   saveRedirectUrl,
-//   passport.authenticate("local", { 
-//   failureRedirect: "/login",
-//   failureFlash:true 
-// }),usercontroller.postLogin);
+
 router.post(
   "/login",
   saveRedirectUrl,

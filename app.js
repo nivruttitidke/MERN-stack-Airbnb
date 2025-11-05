@@ -53,22 +53,6 @@ store.on("error",(err)=>{
     console.log("ERROR IN MONGO SESSION STORE",err);
 });
 
-// app.set("trust proxy", 1);
-
-// const sessionOption = {
-//     store,
-//     secret:process.env.SECRET,
-//     resave:false,
-//     saveUninitialized:false,
-//     cookie: {
-//         httpOnly: true,
-//        secure: true,          
-//        sameSite: "none",
-//         expires: Date.now() + 7 *24 *60 *60 *100,
-//         maxAge: 7 * 24 * 60 * 60 *100,
-       
-//     },
-// };
 app.set("trust proxy", 1);
 
 const sessionOption = {
@@ -89,9 +73,14 @@ app.use(session(sessionOption));
 app.use(flash());
 
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Credentials", "true");
-    next();
+  res.header("Access-Control-Allow-Origin", "https://mern-stack-airbnb.onrender.com");
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+
+ next();
 });
+
 
 
 app.use(passport.initialize());
@@ -108,8 +97,17 @@ app.use((req,res,next)=>{
     next();
 });
 app.get("/", (req, res) => {
-    res.redirect("/listings");
+  res.send("App is running");
 });
+ 
+app.options("*", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "https://mern-stack-airbnb.onrender.com");
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.sendStatus(200);
+});
+
 
 app.use("/listings",listingRouter);
 app.use("/listings",reviewRouter);
