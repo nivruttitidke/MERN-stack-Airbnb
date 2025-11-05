@@ -12,13 +12,27 @@ router.post("/signup",wrapAsync(usercontroller.postSignup));
 
 router.get("/login",usercontroller.login);
 
+// router.post(
+//   "/login",
+//   saveRedirectUrl,
+//   passport.authenticate("local", { 
+//   failureRedirect: "/login",
+//   failureFlash:true 
+// }),usercontroller.postLogin);
 router.post(
   "/login",
   saveRedirectUrl,
   passport.authenticate("local", { 
-  failureRedirect: "/login",
-  failureFlash:true 
-}),usercontroller.postLogin);
+    failureRedirect: "/login",
+    failureFlash: true 
+  }),
+  (req, res) => {
+    const redirectUrl = res.locals.redirectUrl || "/listings";
+    req.flash("success", "Welcome back!");
+    res.redirect(redirectUrl);
+  }
+);
+
 
 router.get("/logout",usercontroller.logout);
 
