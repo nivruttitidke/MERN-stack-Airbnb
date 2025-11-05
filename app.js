@@ -89,6 +89,8 @@ app.use("/listings",listingRouter);
 app.use("/listings",reviewRouter);
 
 app.use("/",userRouter);
-app.listen(8080, () => {
-    console.log("server is listinig on port 8080");
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
 });
+
